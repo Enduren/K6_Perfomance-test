@@ -7,6 +7,8 @@ import { sleep,check } from 'k6';
 // Import the htmlReport function from the k6-reporter library, which is used to generate an HTML report from the test data.
 import {htmlReport} from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 
+//add enivronment variable to the test
+const BASE_URL = __ENV.BASE_URL || 'https://test.k6.io'; // Use the environment variable or default to 'https://test.k6.io'
 
 // This function is called at the beginning of the test, and it sets up the test configuration.
 export const options = {
@@ -22,7 +24,7 @@ export const options = {
 
 export default function () {
     // Make an HTTP GET request to the specified URL and store the response in a variable called response.
-    const response= http.get('https://test.k6.io');
+    const response= http.get(BASE_URL);
     
     // Check if the response status is 200, which indicates that the request was successful. If the check fails, it will be recorded in the test results.
     check(response, {        

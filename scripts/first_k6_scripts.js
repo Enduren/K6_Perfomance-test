@@ -12,8 +12,11 @@ const BASE_URL = __ENV.BASE_URL || 'https://test.k6.io'; // Use the environment 
 
 // This function is called at the beginning of the test, and it sets up the test configuration.
 export const options = {
-    vus: 10, // Number of virtual users
-    duration: '10s', // Duration of the test
+    stages: [
+    { duration: '2m', target: 50 },  // Stage 1: Ramp-Up
+    { duration: '5m', target: 50 },  // Stage 2: Plateu / Hold
+    { duration: '1m', target: 0 },   // Stage 3: Ramp-Down
+  ],
 
     thresholds: {
         http_req_duration: ['p(95)<500'], // 95% of requests should complete within 500ms

@@ -7,7 +7,7 @@ import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporte
 // Environment variable with a fallback string
 const BASE_URL: string = __ENV.BASE_URL || 'https://test.k6.io';
 
-// Typed options configuration
+// Define the options for the k6 test, including stages and thresholds
 export const options: Options = {
     stages: [
         { duration: '10s', target: 10 }, 
@@ -23,7 +23,7 @@ export const options: Options = {
 };
 
 export default function (): void {
-    // TypeScript automatically infers 'response' as the correct type
+ 
     const response = http.get(BASE_URL);
     
     check(response, {
@@ -33,7 +33,7 @@ export default function (): void {
     sleep(1);
 }
 
-// Typed summary function
+// Function to generate an HTML report from the test results
 export function handleSummary(data: any): { [key: string]: string } {
     return {
         "spikeTestTypescriptReport.html": htmlReport(data)
